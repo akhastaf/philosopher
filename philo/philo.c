@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 16:46:39 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/07/08 18:24:38 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/07/10 17:50:46 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int    init_args(t_info *info, int ac, char **av)
         info->philos[i].eated_meals = 0;
         info->philos[i].is_eating = 0;
         (info->philos[i]).display = &(info->display);
+        pthread_mutex_init(&(info->philos[i].eating), NULL);
         i++;
     }
     return (0);
@@ -67,8 +68,7 @@ int     init_philos(t_info *info)
         pthread_mutex_init(&(info->forks[i]), NULL);
         i++;
     }
-    pthread_create(&info->supervisor, NULL, supervisor, (void *)&info);
-    usleep(1000);
+    pthread_create(&info->supervisor, NULL, supervisor, info);
     pthread_join(info->supervisor, NULL);
     return (0);
 }
@@ -87,6 +87,9 @@ int     main(int ac, char **av)
         return (1);
     gettimeofday(&tv, NULL);
     info.rules->time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+    // printf("%ld \n", get_time_pass(info.rules->time));
+    // ft_usleep(TO_MICRO(300));
+    //printf("%ld \n", get_time_pass(info.rules->time));
     if (init_philos(&info))
         return (1);
     return (0);

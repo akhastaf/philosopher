@@ -2,7 +2,6 @@
 # define PHILO_H
 # include <unistd.h>
 # include <pthread.h>
-# include <sys/time.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include "utils.h"
@@ -13,6 +12,14 @@
 # define SLEEPING " is sleeping"
 # define THINKING " is thinking"
 # define DIED " died"
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
 
 typedef struct s_rules
 {
@@ -29,6 +36,7 @@ typedef struct s_philo
     pthread_t       id;
     pthread_mutex_t *forks;
     pthread_mutex_t *display;
+    pthread_mutex_t eating;
     t_rules         *rules;
     unsigned int    index;
     int             eated_meals;
@@ -47,6 +55,6 @@ typedef struct s_info
 }   t_info;
 
 void*    philo_life(void *philo);
-void    handle_message(t_philo *philo, char *message);
+void    handle_message(t_philo *philo, char *message, char *color);
 void    *supervisor(void *info);
 #endif
