@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_usleep.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 16:30:35 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/07/13 16:32:12 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/07/09 09:28:43 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/07/14 19:09:33 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	ft_usleep(size_t time)
 {
-	if (s)
-	{
-		write(fd, s, ft_strlen(s));
-		write(fd, "\n", 1);
-	}
+	size_t	start;
+
+	start = get_time();
+	usleep((time * 1e3) - 20000);
+	while (get_time() - start < time)
+		;
 }

@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/13 16:50:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/07/13 19:32:46 by akhastaf         ###   ########.fr       */
+/*   Created: 2021/07/14 18:28:58 by akhastaf          #+#    #+#             */
+/*   Updated: 2021/07/15 13:04:34 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 # include <unistd.h>
 # include <pthread.h>
 # include <stdlib.h>
 # include <stdio.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+# include <semaphore.h>
+#include <signal.h>
 # include "utils.h"
 # define TAKE_FORK " has taken a fork"
 # define EATING " is eating"
@@ -43,28 +47,29 @@ typedef struct s_rules
 
 typedef struct s_philo
 {
-	pthread_t		id;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	*display;
-	pthread_mutex_t	eating;
-	t_rules			*rules;
-	unsigned int	index;
+	pid_t		    id;
+	pthread_t		monitor;
+	sem_t	        *eating;
+	size_t	        index;
 	int				eated_meals;
 	int				is_eating;
 	size_t			last_time_eat;
-}					t_philo;
+    t_rules         *rules;
+    sem_t           *forks;
+	sem_t			*display;
+}       t_philo;
 
 typedef struct s_info
 {
-	t_rules			*rules;
-	t_philo			*philos;
-	pthread_t		supervisor;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	display;
-}					t_info;
+    t_philo   *philos;
+    t_rules   *rules;
+    sem_t   *forks;
+    sem_t   *display;
+}   t_info;
 
-void	*philo_life(void *philo);
-void	handle_message(t_philo *philo, char *message, char *color);
-void	*supervisor(void *info);
+void	philo_life(t_philo *philo);
 unsigned long int	ft_get_time(t_philo *philo);
+void	handle_message(t_philo *philo, char *message, char *c);
+void    *monitor(void*  philo);
+
 #endif
