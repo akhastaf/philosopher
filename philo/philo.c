@@ -6,19 +6,17 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 16:46:39 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/07/13 16:56:59 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/07/18 12:16:20 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/philo.h"
 
-int	init_args(t_info *info, int ac, char **av)
+int	check_args(t_info *info, int ac, char **av)
 {
-	unsigned int	i;
-
 	info->rules = malloc(sizeof(t_info));
 	info->rules->number_philos = ft_atoi(av[1]);
-	if (!info->rules->number_philos)
+	if (!info->rules->number_philos || !check_digits(ac, av))
 	{
 		ft_puterror("Arguments error\n");
 		return (1);
@@ -35,6 +33,14 @@ int	init_args(t_info *info, int ac, char **av)
 		ft_puterror("Fatal error\n");
 		return (1);
 	}
+	init_data(info, ac, av);
+	return (0);
+}
+
+void	init_data(t_info *info, int ac, char **av)
+{
+	unsigned int	i;
+
 	info->rules->time_to_die = ft_atoi(av[2]);
 	info->rules->time_to_eat = ft_atoi(av[3]);
 	info->rules->time_to_sleep = ft_atoi(av[4]);
@@ -55,7 +61,6 @@ int	init_args(t_info *info, int ac, char **av)
 		pthread_mutex_init(&(info->philos[i].eating), NULL);
 		i++;
 	}
-	return (0);
 }
 
 int	init_philos(t_info *info)
@@ -84,7 +89,7 @@ int	main(int ac, char **av)
 		write(2, "Error : missing arguments\n", 26);
 		return (1);
 	}
-	if (init_args(&info, ac, av))
+	if (check_args(&info, ac, av))
 		return (1);
 	gettimeofday(&tv, NULL);
 	info.rules->time = (tv.tv_sec * 1e3) + (tv.tv_usec / 1e3);

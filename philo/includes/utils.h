@@ -13,4 +13,6 @@ void	ft_usleep(size_t time);
 size_t	get_time(void);
 size_t	get_time_pass(size_t t0);
 size_t	uget_time(void);
+int		ft_isdigit(int c);
+int		is_str_digit(char *str);
 #endif

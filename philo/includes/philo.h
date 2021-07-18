@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:50:13 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/07/13 19:32:46 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/07/18 12:17:07 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,12 @@ typedef struct s_info
 	pthread_mutex_t	display;
 }					t_info;
 
-void	*philo_life(void *philo);
-void	handle_message(t_philo *philo, char *message, char *color);
-void	*supervisor(void *info);
+void				*philo_life(void *philo);
+void				handle_message(t_philo *philo, char *message, char *color);
+void				*supervisor(void *info);
 unsigned long int	ft_get_time(t_philo *philo);
+int					check_digits(int ac, char **av);
+void				init_data(t_info *info, int ac, char **av);
+int					init_philos(t_info *info);
+int					check_args(t_info *info, int ac, char **av);
 #endif

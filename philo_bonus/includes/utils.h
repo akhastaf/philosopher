@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 19:06:49 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/07/14 19:07:22 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/07/18 12:23:06 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,6 @@ void	ft_usleep(size_t time);
 size_t	get_time(void);
 size_t	get_time_pass(size_t t0);
 size_t	uget_time(void);
+int		ft_isdigit(int c);
+int		is_str_digit(char *str);
 #endif

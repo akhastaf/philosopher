@@ -6,7 +6,7 @@
 /*   By: akhastaf <akhastaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 17:58:21 by akhastaf          #+#    #+#             */
-/*   Updated: 2021/07/13 19:33:54 by akhastaf         ###   ########.fr       */
+/*   Updated: 2021/07/18 12:10:47 by akhastaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	check_death(t_info *info)
 	size_t			cur_time;
 	unsigned int	i;
 
-	i = 0;
-	while (i < info->rules->number_philos)
+	i = -1;
+	while (++i < info->rules->number_philos)
 	{
 		if (!info->philos[i].is_eating)
 		{
@@ -37,7 +37,6 @@ int	check_death(t_info *info)
 			}
 			pthread_mutex_unlock(&info->philos[i].eating);
 		}
-		i++;
 	}
 	return (0);
 }
